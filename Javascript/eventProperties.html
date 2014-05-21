@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Javascript Accessing of Event Properties</title>
+</head>
+<body>
+<h1>Accessing Event Properties with Javascript</h1>
+<h2>What is the Type of the Event?</h2>
+<p>The <code>type</code> property can be used in all browsers.</p>
+<pre>
+function doSomething(e) {
+	if (!e) var e = window.event;
+	alert(e.type);
+}
+</pre>
+<h2>Which HTML element is the target of the event?</h2>
+<ul>
+	<li>W3C/Mozilla use <code>target</code>.</li>
+	<li>Microsoft use: <code>srcElement</code>.</li>
+</ul>
+<p>Both properties return the HTML element the event took place on.</p>
+<pre>
+function doSomething(e) {
+	var targ;
+	if (!e) var e = window.event; //deal with Microsoft
+	if (e.target) targ = e.target; //Set targ in W3C and Mozilla
+	else if (e.srcElement) targ = e.srcElement; //Set targ element in Microsoft
+	if (targ.nodeType == 3) // defeat Safari bug
+		targ = targ.parentNode;
+}
+</pre>
+<p><i>The Safari bug:</i><br />
+If the event is taking palce on an element that contains text, then this <code>textNode</code>
+becomes the target of the event, not the actual element. We check if the <code>nodeType</code> is 3
+(a <i>textNode</i> and if it is set the target to the <code>parentNode</code>.
+</p>
+<p>Even if an event is captured or bubbles up, the target/srcElement always remains the element the event took place on</p>
+<p>Other targets include</p>
+<ul>
+	<li><a href =""><code>currentTarget</code></a></li>
+	<li><a href =""><code>relatedTarget</code></a></li>
+	<li><a href =""><code>fromElement</code></a></li>
+	<li><a href =""><code>toElement</code></a></li>
+</ul>
+
+<h2>Which Key Has Been Pressed?</h2>
+<p>Use the <code>keycode</code> and <code>e.which</code> properties to obtain the code of the key e.g. a = 65.
+across all browsers. The use the <code>fromCharCode()</code> method to return the actual character</p>
+<pre>
+function doSomething(e) {
+	var code;
+	if (!e) var e = window.event;
+	if (e.keyCode) code = e.keyCode;
+	else if (e.which) code = e.which;
+	var character = String.fromCharCode(code);
+	alert('Character was ' + character);
+}
+</pre>
+</body>
+</html>

@@ -1,0 +1,408 @@
+/*********************************************************************************
+
+This is the stylesheet for the photo pages that are used to demonstrate the use of progressive
+javascript. If Javascript is enabled, extra functionaility in the form of dropdown boxes is avalable, 
+otherwise a list of link boxes uis presented to the user grouped according to category.
+
+
+Version:		1.0
+Created:		7th April 2010
+Author:			Mark Kenyon
+Last Modified:	
+Modified By:	
+Modifications:
+*********************************************************************************/
+
+/*********************************************************************************
+  Overview
+  --------
+  The dropdown functionality has been implemented by usiing predominantly css techniques to achieve the opening and 
+  closing of the dropdown lists. Javascript is still used to add and change the appropriate classes so that 
+  if Javascript is disabled then the user receives a usable page with all links displayed in a box format.
+  The cascade is used to identify the correct elements within the <ul#maincontent> so that no classes or id's 
+  need to be defined. The 'Left' margin of the dropdown <div>s is set to -999px if a class 'hide is assocaited with the 
+  top level <li> element (Insert|Edit etc). If no class is associated with the top level <li> element, then
+  'left' is set to Auto and the dropdown <div>'s appear. 
+  The <li> Section Head elements are not present in the default HTML. They are <p> elements. They are created dynamically
+  via the DOM if Javascript is enabled. They also have the 'hide' class assigned so that when the page loads, 
+  the dropboxes appear and respond to the hover event on the <li>'s.
+  
+  Images
+  --------
+  
+  A photo category page will be used to diplay all the images from a parivular category e.g. Wengen 2010 in thumbnail format
+  across the page in rows. On clicking on a photograph, it will be displayed as a larger image in an accessible manner.
+  
+  *********************************************************************************/
+    /*
+   
+   TYPOGRAPHY
+   ----------
+
+   Set the overall font characteristics in the body element as for the login page.
+   Define a default serif and san-serif Typeset
+   Use arial as the initial choice as it has good spacing and so is easier to use
+   Also list Helvetica as this is always installed on Macs
+
+   Fontsize: Use ems to define size as these are the most flexible measurements
+   The default font size for most browsers is normally 16px. This is a little too large
+   14 px would be better. This equates to 0.875em as  [16px X 0.875=14px] 
+*/
+
+body {
+ 	margin:5px 15px 5px 15px; /*Add spacing around the body to improve readability*/
+ 	font-family: arial, helvetica, sans-serif;
+ 	font-size: 0.875em; 													
+}
+
+/*The H1 header needs to be centred on the page.
+Increase the fontsize from the default for impact and readability
+*/
+h1 {
+	text-align: center;
+	font-size: 3em;	
+}
+
+/*Style the H2 headers that immediatley follow the main H1 heading i.e. the subheading.
+We use css relative positioning rather than defining a class to target the correct elements. This 
+will help limit any interfere with any user defined stylesheets.
+Right centre the text on the page and decrease the fontsize  to indicate the subheading on the status.
+*/
+h1 + h2 {
+	font-size: 1.5em;
+	text-align: right;
+}
+
+/*Centre the text for the skip to content div*/
+#skipToContent {
+	text-align: center;	
+}
+
+/*Top Headings Insert|Edit etc
+  - increase the fontsize and set as bold to add emphasis
+*/
+#mainContent li{	
+	font-size: 1.2em;
+	font-weight:bold;
+}
+
+/*Default Category headings if Javascript is disabled
+  Centre the headings text. Make the white on a blue background
+ */
+ 
+#mainContent li p{	
+	background: blue;
+	color: white;
+	text-align: center;
+}
+
+/*Set the typography for the <a> links that will appear as TopLinks for the dropdown boxes
+if the user has Javascript enabled.
+*/
+#mainContent li a{	
+	background: blue;
+	color: white;
+	text-align: center;
+}
+
+/*Set the hover effect on the TopLinks.
+Chang the background colour*/
+/* set the hover properties for all links in the functional list
+*/
+#mainContent li a:hover, #mainContent li a:focus{	
+	background: #49A3FF;/*Set it to light blue*/
+}
+
+
+/*The users TopLink may have an id #usersLink applied to it.
+  This will allow a different style to be applied to distinguish it from the other 
+  database functions.
+  We can right align it and apply a different background to create some seperation for
+  better usability
+*/
+  
+#mainContent li a#usersLink {
+	text-align: right;
+	background: #000099;
+}
+
+/* Set the typography for the links held within the dropdown box.
+  Set the colour and background to complement the TopLink headings.
+  Centre the text
+*/
+
+#mainContent div a {	
+		font: bold 0.9em Arial, sans-serif;
+		background: #EAEBD8;
+		color: #2875DE;
+		text-align: center;
+}
+
+/* Style the hover event on the dropdown links */
+#mainContent div a:hover, #mainContent div a:focus{	
+	background: #49A3FF;
+	color: white;
+}
+
+/*Centre the text in the footer.*/
+
+.footer {
+	text-align: center;
+}
+
+/*Set a negative effect for a hover on the footer link */
+.footer ul > li > a:hover, .footer ul > li > a:focus {
+	text-decoration: none;
+ 	color:white;
+ 	background-color:blue;
+}
+
+/*IMAGES*/
+
+/******************************************************************************************************
+The thumbnail immages will be 250px x 250px across. They will have a margin of 10px
+******************************************************************************************************/
+
+img {
+	height: 167px;
+	width: 250px;
+}
+
+/*centre the collection on the page and add some space using a top and bottom margin*/
+.imageCollection {
+	width: 900px;
+	margin:30px auto;
+}
+
+/*Add some margin to the image holders so that they are seperate from each other
+  Float the holders left so that the images align in rows
+  NOTE: We must claer the footer section so that it to does not align left. It also means 
+  that the top margin of containing div (Image collection) will expand to encompass all
+  the images and we can apply styes to it.*/
+.imageHolder{
+	float:left;
+	margin:10px;
+}
+
+/*Centre the caption (held in a <p> element) underneath the image*/
+.imageHolder p {
+	width: 250px;
+	margin:1px auto;
+	text-align:center;
+}
+
+/*Style the large images on the popup page*/
+  
+.lgeImage img{
+	height: 500px;
+	width: 750px;
+}
+
+/*centre the image*/
+.lgeImage {
+	margin:5px auto;
+	width: 760px
+}
+
+
+/*LAYOUT*/
+
+
+/*Set the width for the h2 subheadings and centre on the page*/
+h1 + h2 {
+	margin: 5px auto;
+	width: 600px;
+}
+
+/*Position the skip to content so that it is always aligned in the top right of the screen*/
+
+#skipToContent {
+  	position: absolute;
+	top: 2px;
+	right: 5px;
+	width: 60px;
+}
+
+
+
+/*Float breadcrumbs to the left so that the current user logged in info bar aligns with it, but to the
+right.
+*/
+
+.breadcrumbs {
+	float: left; /*Allows the user info div to align next to it*/
+}
+
+
+/*Center the functions block ul including the dropdown boxes.
+  Set the width to 690px to accomodate the main links (at a width of 205 px), 
+  and the margins between them.
+  Push the footer down using the margin bottom so that it is visible beneath the dropdown boxes.
+*/
+
+ul{
+	margin: 40px  auto 280px auto;
+    width: 690px;	
+	padding: 0;
+}
+
+/*Top Headings Seasons|Players|Competitions etc
+  - Remove the list decoration
+  - float left so that the headings align next to each other
+  - add a small margin to help distinguish the options  
+  */
+
+#mainContent li{	
+	margin: 0.5px;
+	padding: 0px;
+	list-style: none;
+	float: left;
+}
+
+/*Set the default style for the category/TopLink headings. These are <p> elements in the basic HTML
+  which loads with Javascript disabled.
+  Display the headings as blocks so that the submenu links all appear beneath each
+  other as a block. 
+  In this implementation, the width of the link blocks can now be extended as their are fewer of them.
+  The link width must also be expanded to fill the overall width set in the ul #maincontent so that 
+  the links appear centered on the screen.
+ */
+ 
+ #mainContent li p{	
+	padding: 4px 6px;
+	width: 205px;
+}
+
+/*Style the properties for the divs within the mainContent ul. These are the dropdown/category
+  boxes that will hold the further links.
+  Users without Javascript will see links in category boxes. Users with Javascript will see these
+  boxes in response to the hover event on the top level heading.
+  This is achieved via CSS:
+    - by default the left margin property is set to auto so that the boxes are visible.
+  The position is set to absolute - this positions the div absolutely in relation to its parent 
+  element using the top/left/right/bottom properties. The parent element in this case is the li item 
+  holding the top level link.
+  As the div is a block element, setting the padding and margin to o will align the div exactly beneath the li
+  link above it.
+*/
+
+#mainContent div{	
+	position: absolute;
+	margin: 0px;
+	padding: 0px;
+	left: auto;
+}
+
+/*FOOTER*/
+  /*Clear the footer as the images above it are floated. Add some top padding to create some space*/
+
+.footer {
+	clear:both;
+	padding-top:50px;
+}
+
+
+/*LINKS*/
+
+/*Style the skipto content link as a block*/
+#skipToContent a {
+	display: block;
+	width: 60px;	
+}
+
+/*Set the layout for the <a> links that will appear as headings for the dropdown boxes
+if the user has Javascript enabled. They need to be <a> links so that a hover effect can be applied.
+We need to set a width of 205px so that the heading 'Photographic Links' stretches across one line
+*/
+
+#mainContent li a{	
+	display: block; /*a is an inline element so we need to display it as a block so the dropboxes align*/
+	padding: 4px 6px;
+	width: 205px;
+}
+
+/* Set the style for the links held within the dropdown box.
+Set their position to relative so that they are positioned relative to their normal postion. By setting the
+margin to 0px ensures that they are positioned correctly within the surrounding dropdown div.
+Set the width to auto, and  the white-space to nowrap so the dropdown stretches as far as it needs to
+and the links remain on one line.
+Display them as a block so that hey appear beneath each other
+*/
+
+#mainContent div a {	
+		position: relative;
+		display: block;
+		margin: 0px;
+		text-decoration: none;
+		margin: 1px;
+		padding: 4px 6px;
+		width: 205px;
+}
+
+
+/*Add a border to the image links to indicate that they are links*/
+
+a img {
+	border : 2px solid blue;
+}
+
+/*Change the border on hover so that it is obvious that it is the current link*/
+
+.imageHolder a:hover img, .imageHolder a:focus img{
+   border : 2px solid green;
+   text-decoration: none;
+ }
+
+/*Style the link in the footer
+  Remove the list decoration.*/
+.footer ul{
+	list-style: none;
+}
+
+
+.footer ul > li > a:link, a:visited {
+ text-decoration: none;
+ padding: 5px;
+}
+
+/*Set a negative effect for a hover on the footer link
+  Add a little padding to the footer link to improve usability*/
+.footer ul > li > a:hover, .footer ul > li > a:focus {
+	text-decoration: none;
+ 	color:white;
+ 	background-color:blue;
+ 	padding: 5px;
+}
+
+/*VISIBILITY*/
+
+/*Hide the skip to content link by setting the color to the background color(white)*/
+#skipToContent a {
+	color: White;	
+}
+
+/* Make the Skip to content link Visible if users hover over it*/
+#skipToContent a:hover, #skipToContent a:focus {
+	color: #898989;	
+}
+
+/*Create a CSS rule that if a hide class is attached to the li elements
+  that make up the top links, then div elements beneath (the dropdown divs) are hidden*/
+
+#mainContent li.hide div{
+	position: absolute;
+	margin: 0px;
+	padding: 0px;
+	left: -9999px;
+}
+
+/*Create a CSS rule that if a mouse hover occurs on li element with a class hide, 
+  then div elements beneath (the dropdown divs) are displayed. This is achieved by setting the 
+  left property to auto*/
+  
+  #mainContent li.hide:hover div,  #mainContent li.hide:focus div{
+	position: absolute;
+	margin: 0px;
+	padding: 0px;
+	left: auto;
+}

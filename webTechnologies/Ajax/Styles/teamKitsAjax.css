@@ -1,0 +1,70 @@
+#teamKits
+{
+	padding: 0 0 25px 0;
+	background-image: url(../Images/teams_panel_bottom.gif);
+	background-repeat: no-repeat;
+	background-position: 0 100%;
+	color: #FFFFFF;
+	font-size: 95%;
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+#teamKits h2
+{
+	padding: 23px 25px 25px 25px;
+	background-image: url(../Images/teams_panel_top.gif);
+	background-repeat: no-repeat;
+	font-size: 135%;
+	font-weight: normal;
+}
+
+#teamKits p
+{
+	margin: 0 25px;
+}
+
+#teamKits ul
+{
+	margin: 0 25px;
+	list-style: none;
+}
+
+#teamKits li
+{
+	margin: 1em 0 0 0;
+	padding: 0 0 0 20px;
+	background-repeat: no-repeat;
+	background-position: 0 0.1em;
+}
+
+#teamKits a
+{
+	color: #FFFFFF;
+}
+
+#teamKits a:hover
+{
+	text-decoration: none;
+}
+
+#ground
+{
+	min-height: 81px;
+	margin: 5px 5px;
+	padding: 0 0 0 50px;
+}
+
+* html #ground
+{
+	height: 81px;
+}
+
+#ground p
+{
+	margin: 0;
+}
+
+#yearFormed
+{
+	padding-top: 0.25em;
+}

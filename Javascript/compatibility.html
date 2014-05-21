@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Javascript Events and Cross Browser Compatibility</title>
+</head>
+<body>
+<h1>Javascript Events and Cross Browser Compatibility</h1>
+
+<p>Never use <b>browser detect</b> to address browser compatibility issues - it is easy to avoid
+ and does not test for minor browsers. It is also important that event handling compatibility issues
+ are different to DOM object detection issues, so different tests must be applied.</p>
+
+ 
+ <h3>Registering Your Event</h3>
+ 	<p>Inline event regisrtaion works across all browsers, but is not recommended as it mixes structure
+ 	and behaviour. Direct assignment provides the best cross browser support.</p>
+
+ <h3>Accessing the Event</h3>
+ <h4>W3C and Mozilla</h4>
+ <p>Any event handler function assigned to an event receives the event itself as an argumrnt.
+ This is uaually assigned to the variable <code>e</code>, but it does not have to be.</p>
+ <pre>
+ function doSomething(e) {
+	// e gives access to the event
+}
+ </pre>
+ <p>It can also be assigned to an anonymous function</p>
+<pre>element.onclick = function (e) {alert('Event type is ' + e.type)}</pre>
+
+  <h4>Microsoft</h4>
+  <p>Microsoft uses the <code>window.event</code> property to store the last event that took place</p>
+ <pre>
+ element.onclick = doSomething;
+
+function doSomething() {
+	// window.event gives access to the event
+}
+ </pre>
+  <p>or</p>
+<pre>element.onclick = function () {alert('Event type is ' + window.event.type)}</pre>
+
+ 	<p>In order to cover all possibiities, always start an event handling function with:</p>
+ 		<pre>if (!e) var e = window.event</pre>
+ 	<p>For example</p>
+ 	<pre>
+ 	function doSomething(e) {
+	if (!e) var e = window.event
+	// e refers to the event
+}
+ 	</pre>
+ 	<p>In this way, <code>e</code> now refers to the event in all browsers.</p>
+
+	<p><i>Note:</i> in <b>inline</b> event registration the event is passed directly to the function</p>
+<pre>
+&lt;a href="" onclick="doSomething(event)"&gt;
+
+function doSomething(e) {
+	alert(e.type);
+}
+</pre>
+
+	<h4>Accessing the Element that Fired the Event</h4>
+	<p>There are two ways for doing this:</p>
+	
+	<ol>
+		<li>use the <code>this</code> keyword</li>
+		<li>use the <code>target</code>/<code>srcElement</code> properties.</li>
+	</ol>
+
+	<p>The safest way is to use the <code>this</code> keyword. It references the HTML element currently
+	handling the event.</p>
+	
+	 <p>The <code>target</code>/<code>srcElement</code> properties refer to the element that the event
+	 originally took place on. This does not change even if the event bubbles up.</p>
+	
+<h4>Accessing Event Properties</h4>
+<p>This is the area with the worst browser incompatibilities. Always check if each property exists, 
+then read out its value e.g.</p>
+
+<pre>
+function doSomething(e) {
+	if (!e) var e = window.event
+	if (e.keyCode) keyCode = e.keyCode;
+	else if (e.which) keyCode = e.which;
+}
+
+</pre>
+<p>Now the variable <code>keyCode</code> will contain the correct value in all browsers.</p>
+ <h3>Event Order</h3>
+    <p>You can prevent Events from bubbling up e.g.</p>
+<pre>
+ function doSomething(e) {
+	if (!e) var e = window.event
+	// handle event
+	e.cancelBubble = true;
+	if (e.stopPropagation) e.stopPropagation();
+}
+</pre>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Using hcards</title>
+</head>
+<body>
+<h1>Using hCards to Provide vCard Information </h1>
+<p>The hCard is based on the vCard format and provides downloadable, machine-readable information in a human readable form.</p>
+
+<p>Here is an example Contact me &lt;div&gt;</p>
+<div id="contact">
+  <h2>Contact Me</h2>
+  <p>You can contact me via email to 
+   <a href="mailto:mark.kenyon@irisdesignsolutions.co.uk">mark.kenyon@irisdesignsolutions.co.uk</a>, 
+   or send stuff to me at the following address:</p>
+  <p>Fieldside,<br />
+     Lyeway Lane,<br />
+     Ropley</p>
+</div>
+<p>Here is the code:</p>
+
+<pre><code>
+&lt;div id="contact"&gt;
+  &lt;h2>Contact Me&lt;/h2&gt;
+  &lt;p>You can contact me via email to 
+   &lt;a href="mailto:jane@example.com">jane@example.com&lt;/a&gt;, 
+   or send stuff to me at the following address:&lt;/p&gt;
+  &lt;p>255 Some Street,&lt;br /&gt;
+     Some Place,&lt;br /&gt;
+     Some Town&lt;/p&gt;
+&lt;/div&gt;
+</code>
+</pre>
+<p>The steps needed to provide a hCard are</p>
+<ol>
+	<li>Add a class ,<code>vcard</code> to the holding &lt;div&gt;</li>
+	<li>A name is required for the <code>vcard</code>. We use the fn(full name)class to  mark it up.</li>
+	<li>We mark up the email with the <code>email</code> class.</li>
+	<li>We mark up the whole address within a &lt;div&gt; with the <code>adr</code> class. We then mark up
+	the subsections of the address with the appropriate classes. each within it's own &lt;div&gt;.
+	<ul>
+		<li><code>street-address</code> (the street address).</li>
+		<li><code>locality</code> (the town).</li>
+		<li><code>region</code> (the county).</li>
+	</ul>
+	</li>
+</ol>
+<div id="contact" class="vcard">
+  <h2>Contact Me</h2>
+  <h3 class="fn">Mark Kenyon</h3>
+  <p>You can contact me via email to 
+   <a class="email" href="mailto:mark.kenyon@irisdesignsolutions.co.uk">mark.kenyon@irisdesignsolutions.co.uk</a>, 
+   or send stuff to me at the following address:</p>
+   <div class="adr">
+  		<div class="street-address">Fieldside, Lyeway Lane</div>
+     	<div class="locality">Ropley</div>
+     	<div class="region">Hampshire</div>
+   </div>
+</div>
+
+<p>That is it! Here is the finished code:</p>
+<pre><code>
+  &lt;div id="contact" class="vcard"&gt;
+    &lt;h2&gt;Contact Me&lt;/h2&gt;
+    &lt;h3 class="fn"&gt;Mark Kenyon&lt;/h3&gt;
+    &lt;p&gt;You can contact me via email to 
+     &lt;a class="email" href="mailto:mark.kenyon@irisdesignsolutions.co.uk"&gt;mark.kenyon@irisdesignsolutions.co.uk&lt;/a&gt;, 
+     or send stuff to me at the following address:&lt;/p&gt;
+     &lt;div class="adr"&gt;
+  		&lt;div class="street-address"&gt;Fieldside, Lyeway Lane&lt;/div&gt;
+     	&lt;div class="locality"&gt;Ropley&lt;/div&gt;
+     	&lt;div class="region"&gt;Hampshire&lt;/div&gt;
+     &lt;/div&gt;
+  &lt;/div&gt;
+</code></pre>
+<h2>Adding a Download link</h2>
+<p>You can add a link to allow users to download your contact information e.g.</p>
+
+<pre>
+	<code>&lt;a href="http://h2vx.com/vcf/pageWithhCard.com"&gt;Download vCard&lt;/a&gt;</code>
+</pre>
+<p>This uses the <code>h2vx service</code> to convert your hCard to a vCard for download. An example can be found here:</p>
+<a href="http://h2vx.com/vcf/training.irisdesignsolutions.co.uk/hCards/hcard.html">Download vCard</a>
+<p>If the target page has more than one hCard then you can add an id attribute to each and add <code>%23hCardID</code>
+to the end of the href e.g.</p>
+
+<pre>
+	<code>&lt;a href="http://h2vx.com/vcf/pageWithhCard.com%23hCardID">Download vCard&lt;/a&gt;</code>
+</pre>
+</body>
+</html>

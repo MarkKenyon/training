@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <title>Navigating the DOM with Javascript</title>
+</head>
+
+<body>
+  <div class="header">
+    <h1>Navigating the Document Object Model</h1>
+
+    <h2>Interactive Web Design Using Javascript and the DOM</h2>
+
+    <div class="navigation">
+      <ul>
+        <li><a href="home.html">Home</a></li>
+
+        <li><a href="html5.html">HTML5</a></li>
+
+        <li><a href="javascript">Javascript</a></li>
+
+        <li>Mobile Apps</li>
+
+        <li>Mobile Web</li>
+
+        <li>JQuery</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mainContent">
+    <p>Effective DOM Scripting allows you to build interactive websites that can improve usability while ensuring accessibility is maintained. You can build exciting web sites whilst maintaining Web Standards</p>
+
+    <ul>
+      <li>Seperate behaviour from structure using unobtrusive Javascript to ensure your website works as expected</li>
+
+      <li>Create great effects with progressive enhancement to add dynamism to your sites.</li>
+
+      <li>Use graceful degradation to guarantee that your site is always effective.</li>
+    </ul>
+
+    <h3>DOM Manipulation</h3>
+
+    <p>The DOM represents a web page as a hierarchical, tree-like structure and we can use Javascript methods to manipulate underlying HTML elements of the page in order to create powerful effects.</p>
+
+    <p><img src="domImage.png" alt="A representaion of the DOM" /></p>
+
+    <h4>Nodes</h4>
+
+    <p>The document tree is a collection of nodes, with each of the branches and leaves on the tree represented by a node. There are a number of different types of node:</p>
+
+    <dl>
+      <dt>Element Nodes</dt>
+
+      <dd>HTML tags e.g. &lt;h2&gt;, &lt;p&gt;, &lt;body&gt; are represented by element nodes within the DOM.</dd>
+
+      <dt>Text Nodes</dt>
+
+      <dd>The text within an element, e.g. the text of a paragraph within the &lt;p&gt; tags are represented as text nodes. In HTML, text nodes must be enclosed within element nodes, but element nodes do not have to contain text e.g. the &lt;img&gt; tag.</dd>
+
+      <dt>Attribute Nodes</dt>
+
+      <dd>Attributes of HTML tags e.g. title or src are represented by Attribute Nodes.</dd>
+    </dl>
+
+    <p>We can use DOM methods to manipulate these nodes.</p>
+
+    <h3>DOM methods</h3>
+
+    <p>Finding Nodes</p>
+
+    <dl>
+      <dt>getElementById</dt>
+
+      <dd>Takes argument: an id. Returns: the element with that id. It can only be called on the document object.</dd>
+
+      <dt>getElementsByTagName</dt>
+
+      <dd>Takes argument: the name of a tag. Returns: an array of all the elements with that tag name.</dd>
+
+      <dt>hasChildNodes</dt>
+
+      <dd>Returns true if the element on which it is called has any child nodes.</dd>
+
+      <dt>childNodes</dt>
+
+      <dd>Returns an array of all the children of the element on which it is called.</dd>
+
+      <dt>firstChild</dt>
+
+      <dd>Returns the first child of the element on which it is called.</dd>
+
+      <dt>lastChild</dt>
+
+      <dd>Returns the last child of the element on which it is called.</dd>
+
+      <dt>nextSibling</dt>
+
+      <dd>Returns the next node of the element on which it is called. Or null.</dd>
+
+      <dt>parentNode</dt>
+
+      <dd>Returns the parent node of the element on which it is called. Or null.</dd>
+
+      <dt>previousSibling</dt>
+
+      <dd>Returns the previous node of the element on which it is called. Or null.</dd>
+    </dl>
+
+    <p>These methods are applied within the current scope of the document. So you can find a given element within a document using getElementById, and then use getElementsByTagName to return all the given tags just within that elements scope in the document.</p>
+
+    <dl>
+      <dt>getAttribute</dt>
+
+      <dd>Takes argument: the name of an attribute. Returns: value of that attribute or null if no value is set. It can only be called on an element node.</dd>
+
+      <dt>setAttribute</dt>
+
+      <dd>Takes arguments: an attribute name, the value that you wish to set for that attribute.</dd>
+    </dl>
+
+    <p>Nodes can also be created, inserted, removed and replaced</p>
+
+    <dl>
+      <dt>createElement</dt>
+
+      <dd>Takes argument: the name of the element to be created and returns the new element.</dd>
+
+      <dt>createTextNode</dt>
+
+      <dd>Takes argument: the text to be added. Returns: a new text node containing the specified text. This new text node is not automatically added to the document - you need to use node manipulation methods to insert or append the new node, or replace an existing node.</dd>
+
+      <dt>appendChild</dt>
+
+      <dd>Takes a node as an argument and appends this node as the last child of the element on which it is called. It returns the appended node.</dd>
+
+      <dt>insertBefore</dt>
+
+      <dd>Takes two arguments: the new node and the target node. It inserts the new node before the target node on within the element on which it is called. It returns the new node.</dd>
+
+      <dt>removeChild</dt>
+
+      <dd>It takes a node as an argument and removes this node, and all of its children, from the element on which it is called. It returns a reference to the node that has been removed.</dd>
+
+      <dt>replaceChild</dt>
+
+      <dd>This takes two arguments: the new node and the old node. It replaces the old node with the new node within the element on which it is called. It returns the old node.</dd>
+    </dl>
+
+    <p>You can also access the properties of nodes within the document tree.</p>
+
+    <dl>
+      <dt>nodeName</dt>
+
+      <dd>Returns a string containing the name of the node on which it is called</dd>
+
+      <dt>nodeType</dt>
+
+      <dd>Returns an integer value that corresponds to the type of the node on which it is called.</dd>
+
+      <dt>nodeValue</dt>
+
+      <dd>Returns the value of the node on which it is called.</dd>
+    </dl>
+  </div>
+
+  <div class="footer">
+    <a href="aboutMe.html">About Me</a>
+
+    <p>Site Last Updated 28th February 2013</p>
+  </div>
+</body>
+</html>

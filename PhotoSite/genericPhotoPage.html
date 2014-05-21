@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<script src="./Scripts/progDropdown.js" type="text/javascript">
+</script>
+
+<!-- 
+  This page will be a generic page that will be used to show the layout 
+  required to hold a series of large thumbnail photographs in rows.
+  Clicking on a photograph will open a larger version in a progressive way.
+  Each category from the home page (Wengen 2010, Wengen 2009 etc will open
+  a thumbnail page like this one displaying all the photos in the collection.
+  
+  Use the Import statement to link to the stylesheet.
+  This statement is not supported in older browsers so only
+  browsers that support css correctly will use the stylesheets.
+  Older browsers will not apply the style. This workaround relies 
+  on the HTML being structured correctly so that the page will
+  still be rendered in a usable manner.
+ -->
+<style type="text/css">
+	@import url("./Styles/photo.css");
+</style>
+
+<!-- Provide a meaningful title for SEO and accessibility enhancement -->
+
+<title>Photographic Studies Home Page</title>
+</head>
+
+<body>
+<!-- add a skip to main content page link to allow screen readers to immediatley access content -->
+<div id="skipToContent">
+	<p><a href="#mainContent">skip to content</a></p>
+</div>
+
+<h1>Photographic Study</h1>
+<h2>Category Page</h2>
+
+<hr />
+
+
+<div class="breadcrumbs">
+  <a href="photohome.html">Home </a> &gt; Category Page
+</div>
+
+
+<!-- This is the main content area thatwill contain the rows of images -->
+<div class="imageCollection">
+	<div class="imageHolder">
+		<img alt="test" src="./Images/Wengen2010/skiing2010_eiger.jpg" />
+		<!-- Add a p element as a caption -->
+		<p>The North Face of the Eiger</p>
+	</div>
+	<div class="imageHolder">
+		<img alt="test" src="./Images/Wengen2010/skiing2010_cafe.jpg" />
+		<!-- Add a p element as a caption -->
+		<p>The Cafe at Kleine Scheidegg</p>
+	</div>
+	<div class="imageHolder">
+		<img alt="test" src="./Images/Wengen2010/skiing2010_skiers.jpg" />
+		<!-- Add a p element as a caption -->
+		<p>Relaxed and Ready to Go</p>
+	</div>
+	<div class="imageHolder">
+		<img alt="test" src="./Images/Wengen2010/skiing2010_valley.jpg" />
+		<!-- Add a p element as a caption -->
+		<p>A View Down the Valley</p>
+	</div>
+	<div class="imageHolder">
+		<img alt="test" src="./Images/Wengen2010/skiing2010_bridge.jpg" />
+		<!-- Add a p element as a caption -->
+		<p>On the Way to Wengen</p>
+	</div>
+	<div class="imageHolder">
+		<img alt="test" src="./Images/Wengen2010/skiing2010_trains.jpg" />
+		<!-- Add a p element as a caption -->
+		<p>Mountain Trains</p>
+	</div>
+</div>
+
+
+
+
+<div class="footer">
+  <ul>
+	  <li><a href="contact.php">Contact Me</a></li>
+  </ul>
+</div>
+</body>
+</html>
+

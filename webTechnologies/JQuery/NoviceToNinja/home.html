@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<!-- Link to JQuery files -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js"></script>
+
+<!-- Link to test Javascript file -->
+<script src="./Scripts/bespoke.js"></script>
+
+<title>JQuery Novice to Ninja</title>
+</head>
+<body>
+
+<table class="data" id="celebs">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Occupation</th>
+              <th>Approx. Location</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>203A</td>
+              <td>Johny Stardust (<a href="bio.pdf">bio</a>)</td>
+              <td>Front-man</td>
+              <td>Los Angeles</td>
+              <td>$39.95</td>
+            </tr>
+            <tr>
+              <td>141B</td>
+              <td>Beau Dandy (<a href="img.jpg">pic</a>,<a href="bio.pdf">bio</a>)</td>
+              <td>Singer</td>
+              <td>New York</td>
+              <td>$39.95</td>
+            </tr>
+            <tr>
+              <td>2031</td>
+              <td>Mo' Fat (<a href="img.jpg">pic</a>)</td>
+              <td>Producer</td>
+              <td>New York</td>
+              <td>$19.95</td>
+            </tr>
+            <tr>
+              <td>007F</td>
+              <td>Kellie Kelly (<a href="bio.pdf">bio</a>,<a href="w.doc">press</a>)</td>
+              <td>Singer</td>
+              <td>Omaha</td>
+              <td>$11.95</td>
+            </tr>
+            <tr>
+              <td>8A05</td>
+              <td>Darth Fader (<a href="img.jpg">pic</a>)</td>
+              <td>DJ</td>
+              <td>London</td>
+              <td>$19.95</td>
+            </tr>
+            <tr>
+              <td>6636</td>
+              <td>Glendatronix  (<a href="bio.pdf">bio</a>,<a href="w.doc">press</a>)</td>
+              <td>Keytarist</td>
+              <td>London</td>
+              <td>$39.95</td>
+            </tr>
+          </tbody>
+        </table>
+
+<!-- read any scripts after the HTML has loaded 
+<script>
+
+$(document).ready(
+
+	function(){
+		alert($('#celebs tbody tr').length + ' elements');
+	}
+);
+	
+	
+</script>
+-->
+
+</body>
+</html>

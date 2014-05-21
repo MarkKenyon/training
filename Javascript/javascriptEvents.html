@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Javascript Events</title>
+</head>
+<body>
+<h1>Javascript Events</h1>
+
+<h2>Capturing Events with Javascript</h2>
+<p>The first step to capturing an event in Javascript is to register an Event Handler. There are 
+are number of options for doing this </p>
+<ol>
+	<li>Inline</li>
+	<li>Direct Assignment</li>
+	<li>W3C</li>
+	<li>Microsoft</li>
+</ol>
+ 
+ <h3>Inline</h3>
+ 	<p>Event handlers are added as attributes to the HTML elements e.g.</p>
+ 		<pre>&lt;a href="somewhere.html" onClick="doSomething()"&gt;</pre>
+ 	<p>This mixes the Javascript and the HTML which is bad!</p>
+ <h3>Direct Assignment</h3>
+ 	<p>The event handler is assigned directly to the element in the form of:</p>
+ 		<pre>element.onclick = doSomething;</pre>
+ 	<p>This has the broadest crossbrowser support which is good!</p>
+ 	<p>This registers the function <code>doSomething()</code> with the onclick property of the element 
+ 	and is  executed whenever the user clicks on the element. 
+ 	<br /><i>Note:</i> the event name must be all lower case.</p>
+
+	<p>To remove the event handler, simply make the onclick method empty:</p>
+	<pre>element.onclick = null;</pre>
+	<p>When using direct assignment to register an event handler you <b>do not use parentheses ()</b>.
+	If you added parantheses then the function would be called and the return value of the function assigned
+	to the event.</p>
+	<p>By assigning the function without the parantheses, the function is copied in its entirety and runs
+	when the event is triggered.</p>
+	<h4>Using the <i>this</i> keyword with direct assignment</h4>
+	<p>With <b>inline</b> event handling, the <i>this</i> keyword can be used to refer to the object 
+	calling the function. With direct assignment, the <i>this</i> keyword is used within the event handling 
+	function itself e.g. </p>
+<pre>function doSomething(){
+	this.style.backgroundColor='red';
+}
+	
+element.onclick = doSomething;
+</pre>
+
+	<p>Clicking on element will now give that element a red backround.</p>
+	<h4>Anonymous Functions with Direct Assignment</h4>
+	<p>You can also directly assign an anonymous function via direct assignment</p>
+<pre>element.onmouseover = function () {this.style.backgroundColor='red'}</pre>
+	<h4>Problems with Direct Assignment</h4>
+	<p>The biggests problem with direct assignment is assigning multiple functions to the same event.
+	If you just add more functions, then only the last function added is assigned to the event. 
+	The others are overwritten.
+	</p>
+<pre>
+element.onmouseover = doSomething;
+element.onmouseover = doSomethingElse;
+</pre>
+	<p>Here, only <code>doSomethingElse()</code> is assigned to onmouseover. The way around this is to 
+	create a single function that calls the other functions.</p>
+<pre>
+element.onclick = function () {doSomething(); doSomethingElse;()}
+</pre>
+	<p>or</p>
+<pre>
+function doThings(){
+	doSomething();
+	doSomethingElse();
+}
+
+element.onclick = doThings;
+</pre>
+	<h4>Advanced Issues: Flexible Registration</h4>
+	<p>We can check whether an event handler already has an event assigned to it, 
+	and assign the result to a variable.</p>
+<pre>
+var existingHandler = (element.onclick) ? element.onclick : function () {}
+</pre>
+	<p>If the element already has an eventHandler assigned to it <code>(element.onclick)</code> will
+	evaluate to true and the ternary operator will assign this event handler (<code>element.onclick</code>)
+	to the variable <code>existingHandler</code>.</p>
+	<p>If no event is currently assigned to the element, <code>(element.onclick)</code> will be false
+	and an empty function (<code>function(){}</code>) will be assigned to <code>existingHandler</code>.</p>
+	<p>Now when a new event is added to the onclick event, assign a function that first runs old and
+	then the function that you wish to add.</p>
+	
+<pre>
+element.onclick = function () {old(); doSomethingElse()};
+</pre>
+	
+	<p>In this way, if the <code>onclick</code> event has a handler associated, it will be added/preserved 
+	and then the second function will also be associated with the event.</p>
+	
+<h4>Which Event Handlers are registered</h4>
+<p>Using direct assignment, you can find what (if any) event handlers ate associated with an element by</p>
+
+<pre>alert(element.onclick);</pre>
+<p><i>Note:</i> This does work with the W3C model yet. A method <code>eventListenerList()</code> 
+is defined but it is not yet supported.</p>
+ <h3>W3C</h3>
+    <p>The W3C model provides a simple way to add multiple event handlers to the same event via
+ the function <code>addEventListener()</code>.</p>
+ <pre>element.addEventListener('click',doSomething,false)</pre>
+ <p>To add multiple events, just call the function multiple times:</p>
+ <pre>
+element.addEventListener('click',startDragDrop,false);
+element.addEventListener('click',spyOnUser,false);
+ </pre>
+ <p>The method <code>removeEventListener()</code> can be used to remove an eventhandler.</p>
+ <pre>
+ element.removeEventListener('click',doSomething,false)
+ </pre>
+ <h4>Anonymous Functions with The W3C Model</h4>
+ 	<p>You can use <code>addEventListener()</code> to add anonymous functions:</p>
+ <pre>
+ element.addEventListener(
+ 	'click',
+ 	function () {
+		this.style.backgroundColor = 'red'
+		},
+	false);
+ </pre>
+ <h4>The <code>this</code> keyword and the W3C Model</h4>
+ <p>
+ In the W3C model, the <b>this</b> keyword works the same as for direct assignment and refers 
+ to the HTML element currently handling the event.
+ </p>
+ <h4>The <code>true</code> or <code>false</code> return</h4>
+ <p>The return from the <code>addEventListener()</code> function determines whether the handler
+ executes in the <a href="">bubbling or capturing phase</a>. <code>false</code> means that the handler executes
+ in the <i>bubbling</i> phase.</p>
+
+ <h3>Microsoft</h3>
+	<p>The Microsoft Event Registartion model attaches event handlers to events</p>
+	
+<pre>
+element.attachEvent('onclick',doSomething);
+element.attachEvent('onclick',doSomethingElse);
+</pre>
+
+	<p>To remove an event you detach it:</p>
+
+<pre>
+element.detachEvent('onclick',doSomething);
+</pre>
+
+<p>There are two main differences with the Microsoft model:</p>
+
+<ol>
+	<li>Events always bubble up</li>
+	<li>The event handler is referenced and not copied, so the <b>this</b> keyword always references
+	the <code>Window</code> object. This is pretty useless.</li>
+</ol>
+<hr />
+
+<p>The safest approach may be to use the traditional method which provides
+the broadest <a href="compatibility.html>cross browser compatibility</a>.</p>
+</body>
+</html>

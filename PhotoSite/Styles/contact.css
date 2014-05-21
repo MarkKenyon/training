@@ -1,0 +1,187 @@
+/*Set the margin and padding for all elements to 0*/
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+/*Set the background color for the body element*/
+
+body {
+	background-color: #ffffff	;
+}
+
+/*add a border to the wrapper and center it on the screen
+  Set the backgroubd to white*/
+#wrapper {
+	margin: 20px auto;
+	width: 700px;
+	background: #ffffff;
+	padding: 20px;
+	border: 1px solid #666666;
+}
+
+/*Float the Main Content div to the left*/
+#mainContent {
+	float: left;
+	width: 460px;
+	margin-right: 20px;
+}
+
+/*Float the sidebar to the left*/
+#sidebar {
+	float: left;
+	width: 200px;
+	background: #eeeeee;
+	padding: 10px;
+}
+
+/*Use the after pseudo property to add some invisible content after 
+  any clearcols class and then set the float property to clear.
+  This anchors any floating <div>s above it.*/
+  
+.clearcols:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+/* --- Style the links --- */
+
+a {
+	color: #0f871b;
+}
+
+a:visited {
+	color: #528758;
+}
+
+a:hover {
+	color: #00ba13;
+}
+
+/* --- typography --- */
+
+/*Set the overall font size to 100%*/
+
+html {
+	font-size: 100%;
+}
+
+/*Set the font in the body so that 1 em will equate to 10 px
+  We can then use em's for sizes after this.
+  The default fontsize for most browsers is 16px so 62.5% of 16 px 
+  will give 10 px*/
+  
+body {
+	font: 62.5%/1em "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
+}
+
+/*Style the h1 element*/
+h1 {
+	font-size: 1.6em;
+	margin-bottom: 0.4em;
+	text-transform: uppercase;
+}
+
+/*Style the h2 element*/
+h2 {
+	font-size: 1.3em;
+	margin-bottom: 0.4em;
+	text-transform: uppercase;
+}
+
+/*Style the p elements. Increase the line height to improve readability*/
+p {
+	font-size: 1.2em;
+	line-height: 1.4em;
+	margin-bottom: 1em;
+}
+
+/*Style the hidden class so that the vcard keywords are not displayed*/
+.hidden {
+	display: none;
+}
+
+/*Style the sidebar elements and classes*/
+.tel, .fn {
+	margin-bottom: 0;
+}
+
+.org {
+	font-weight: bold;
+}
+
+p.saveCard {
+	margin-top: 1em;
+}
+
+/*Style the Form elements*/
+
+/*Clear both sides of a row class to force content onto a new line*/
+.row {
+	clear: both;
+	padding-top: 5px;
+}
+
+form {
+	margin-bottom: 1em;
+}
+
+fieldset {
+	margin-bottom: 10px;
+	padding: 10px;
+	border: 1px dotted #666666;
+}	
+
+legend {
+	padding: 0 10px;
+	background: #ffffff;
+	text-transform: uppercase;
+	color: #666666;
+	font-size: 1.0em;
+}
+
+/*Float the form label to the left
+  Align the text to the right and set a width.
+  This has the effect of lining up the labels and the input boxes*/
+.formLabel {
+	font-size: 1.2em;
+	line-height: 1.6em;
+	text-align: right;
+	margin-right: 10px;
+	width: 100px;
+	float: left;
+}
+
+/*Float the form controls to the left and set a width*/
+.formControl {
+	float: left;
+	width: 326px;
+}
+
+/*Set general properties for the input and textarea controls*/
+input, textarea {
+	border: 1px solid #666666;
+	padding: 2px;
+	font: 1em "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
+}
+
+/*Define the specific properties for input and textarea and submit button*/	
+input {
+	font-size: 1.2em;
+	width: 322px;
+}			
+
+textarea {
+	width: 454px;
+}
+		
+.submitButton {
+	background: #eeeeee;
+	font: bold 1.0em "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
+	padding: 4px 6px;
+	width: auto;
+}		

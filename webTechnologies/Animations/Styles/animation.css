@@ -1,0 +1,90 @@
+/* Basic element styles */
+
+body {
+  background-color: white;
+  color: black;
+  font: small Verdana, Arial, sans-serif;
+}
+
+/* animated list styles (static) */
+
+ul.animated {
+  background-color: #CCFFFF;
+  border: 1px solid #FFF;
+  border-top: none;
+  display: block;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.animated li {
+  clear: left;
+}
+
+ul.animated h3 {
+  background-color: #CCCCFF;
+  border: 1px solid #FFF;
+  border-width: 1px 0;
+  font-size: 1.5em;
+  margin: 0 0 -1px;
+}
+
+ul.animated h3 a:link, ul.animated h3 a:visited {
+  color: #000033;
+  display: block;
+  margin: 1px;
+  padding: 0 0.667em;
+  text-decoration: none;
+}
+
+/* animated list content styles (static) */
+
+ul.animated h4 {
+  font-size: 1.1em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+ul.animated p {
+  display: inline;
+  float: left;
+  clear: left;
+  width: 50%;
+  margin: 1em 0 0 0;
+}
+
+ul.animated div.kits {
+	margin: 1em 0 1em 50%;
+}
+
+div.kits ul {
+	list-style: none;
+	margin: 1em 0 0 0;
+	padding: 0;
+}
+
+div.kits li {
+  clear: none;
+  display: inline;
+  margin: 0 3em 0 0;
+}
+
+/* Accordion styles (dynamic) */
+
+.listContent {
+  overflow: hidden;
+  padding: 0 1em;
+}
+
+/*hide collapsed list content*/
+li.collapsed .listContent {
+  position: absolute;
+  left: -9999px;
+}
+
+/* Fixes Safari bug that prevents expanded content from displaying.
+   See http://betech.virginia.edu/bugs/safari-stickyposition.html */
+li.collapsed .listContent p {
+  position: relative;
+}

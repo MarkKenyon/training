@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Javascript and Ordering of Events</title>
+</head>
+<body>
+<h1>Event Order</h1>
+
+<p>If one element is nested within another element:</p>
+<pre>
+-----------------------------------
+| element1                        |
+|   -------------------------     |
+|   |element2               |     |
+|   -------------------------     |
+|                                 |
+-----------------------------------
+</pre>
+<p>If both have a click event defined and a user clicks within element 2, then an event will be triggered in both 
+elements, but which fires first?</p>
+<p>There are three models:</p>
+<ul>
+	<li>Mozilla.</li>
+	<li>Microsoft use</li>
+	<li>W3C</li>
+</ul>
+<h2>Event Capturing</h2>
+<p>Mozilla say that the event on <i>element 1</i>takes place first. This is <b>Event Capturing</b></p>
+<pre>
+               | |
+---------------| |-----------------
+| element1     | |                |
+|   -----------| |-----------     |
+|   |element2  \ /          |     |
+|   -------------------------     |
+|        Event CAPTURING          |
+-----------------------------------
+</pre>
+
+
+<h2>Event Bubbling</h2>
+<p>Microsoft say that <i>element 2</i>fires first. This is <b>event bubbling</b>.</p>
+<pre>
+               / \
+---------------| |-----------------
+| element1     | |                |
+|   -----------| |-----------     |
+|   |element2  | |          |     |
+|   -------------------------     |
+|        Event BUBBLING           |
+-----------------------------------
+</pre>
+<h2>W3C</h2>
+<p>Any event taking place in the W3C event model is first captured until it reaches the target element
+(the element that was clicked), and then bubbles up again.</p>
+<pre>
+                 | |  / \
+-----------------| |--| |-----------------
+| element1       | |  | |                |
+|   -------------| |--| |-----------     |
+|   |element2    \ /  | |          |     |
+|   --------------------------------     |
+|        W3C event model                 |
+------------------------------------------
+</pre>
+<p>The final parameter of the <code>addEventListener</code> method determines at which stage the event is captured:</p>
+<ul>
+	<li>If it is set to <i>true</i>, the event handler is set for the <b>capturing phase</b>.</li>
+	<li>If it is set to <i>false</i>, the event handler is set for the <b>bubling phase</b>.</li>
+</ul>
+<h3>Example</h3>
+<pre>
+element1.addEventListener('click',doSomething2,true)
+element2.addEventListener('click',doSomething,false)
+</pre>
+<p>If the user clicks on element2, then element2 is the <i>target element</i>.</p>
+<ol>
+	<li>The event is first captured according to the W3C model, so it looks to it's ancestor <i>element1</i> first to see if
+	an event handler for the click event is set.</li>
+	<li><code>doSomething2()</code>is set for <i>element1</i> so this event fires.</li>
+	<li>The next step in the capturing phase is to see if any event handlers are registered to <i>element2</i>.
+	Because, the last parameter is set to <i>false</i>, no event is set for this element in the capturing phase - 
+	it is set for the bubbling phase.</li>
+	<li>Having reached the target element, the W3C model declares that event bubbling should begin.</li>
+	<li>Event bubbling first looks for an event handler being defined in <i>element2</i>. <code>doSomething()</code>
+	is defined for <i>element2</i> and for the bubbling phase as the last parameter is set to <i>false</i>.
+	<code>doSomething()</code> therefore fires.</li>
+	<li>The next step of the bubbling phase is to look for any event handlers registered for <code>element1</code>.
+	Because the last parameter is set to false, no event handler is defined for the bubbling phase, so the event does not fire.
+	</li>
+</ol>
+<p>The reverse situation would be:</p>
+<pre>
+element1.addEventListener('click',doSomething2,false)
+element2.addEventListener('click',doSomething,false)
+</pre>
+<p>Now if the user clicks on element2</p>
+<ol>
+	<li>The event is first captured according to the W3C model, so it looks to it's ancestor <i>element1</i> first to see if
+	an event handler for the click event is set.</li>
+	<li><code>doSomething2()</code>is set for <i>element1</i>, but the last parameter is set false (bubbling)
+	so no event handler is defined and no event fires.</li>
+	<li>The next step in the capturing phase is to see if any event handlers are registered to <i>element2</i>.
+	Again, the last parameter is set to <i>false</i>, no event is set for this element in the capturing phase - 
+	it is set for the bubbling phase.</li>
+	<li>Having reached the target element, the W3C model declares that event bubbling should begin.</li>
+	<li>Event bubbling first looks for an event handler being defined in <i>element2</i>. <code>doSomething()</code>
+	is defined for <i>element2</i> and for the bubbling phase as the last parameter is set to <i>false</i>.
+	<code>doSomething()</code> therefore fires.</li>
+	<li>The next step of the bubbling phase is to look for any event handlers registered for <code>element1</code>.
+	The last parameter is set to false, the bubbling phase, so the <code>doSomething2()</code> event now fires.
+	</li>
+</ol>
+<h3>Using Direct assignment of Events</h3>
+	<p>If you use</p>
+	<pre>element1.onclick = doSomething2</pre>
+	<p>then event registration is implemented as the <b>bubbling phase</b>.</p>
+	
+<h2>Usage</h2>
+	<p>Event order is not normally catered for via either bubbling or capturing. Events are generally associated with 
+	particular elements with each having their own Event Handler associated. This keeps everything simple for the End User.</p>
+	
+<h2>Default Event Handlers</h2>
+	<p>By setting an event on <code>document.onclick</code>, you can ensure that a default event is always fired, as ant other
+	 events would eventually bubble/capture to the document's onclick event.</p>
+	 
+	 <pre>
+------------------------------------
+| document                         |
+|   ---------------  ------------  |
+|   | element1    |  | element2 |  |
+|   ---------------  ------------  |
+|                                  |
+------------------------------------
+
+element1.onclick = doSomething;
+element2.onclick = doSomething;
+document.onclick = defaultFunction;
+</pre>
+
+<p>If the user clicks on <code>element1</code> or <code>element2</code>, then <code>doSomething()</code> is executed. The 
+event propagation can be stopped  here, or the event can be allowed to bubble up to the <code>defaultFunction()</code>.</p>
+<p>Also if the user clicks anywhere else on the document then <code>defaultFunction()</code> will be executed.</p>
+
+<h2>Turning Off Capturing/Bubbling</h2>
+	<p>Alternatively, it may be preferable to turn off all event capturing and bubbling to prevent event handlers from 
+	interfering with each other.</p>	
+	
+<h3>The Microsoft Model</h3> 
+
+<pre>window.event.cancelBubble = true</pre>
+
+<p>will turn off bubbling.</p>
+
+<h3>The W3C Model</h3> 
+
+<pre>e.stopPropagation()</pre>
+
+<p>will turn off bubbling in the bubbling phase.</p>
+
+<p>It is not possible to turn off capturing</p>
+<h3>Cross Browser Compatibility</h3>
+
+<p>the function to turn off bubbling across all browsers is:</p>
+
+<pre>
+function doSomething(e){
+	if (!e) var e = window.event;
+	e.cancelBubble = true;
+	if (e.stopPropagation) e.stopPropagation();
+}
+</pre>
+<h2>Current Target</h2>
+<p>The target element refers to the element that the event happened on. This does not change during capturing or bubbling.
+It is referenced by:</p>
+<ul>
+	<li><code>target</code> in the Mozilla model</li>
+	<li><code>srcElement</code> in the Microsoft model</li>
+</ul>
+<p>The W3C model uses <code>currentTarget</code> to reference the element that is currently handling the event during
+the bubbling or capturing phase. There is no equivalent in the Microsoft model.</p>
+<p>The <code>this</code> keyword can also often be used to refer to the element that is currently firing the event.
+However, again this does not work in the Microsoft model. Where an event is bubbling/capturing it is impossible to
+determine which element is currently handling the event in the Microsoft model.</p>
+<h3>Problems with MouseOver Events</h3>
+<p>Event bubbling/capturing can cause problems with the mouseover event where HTML elements are nested. e.g.</p>
+<pre>
+-----------------------------------------
+| This is div id="ev3"                  |
+|   -----------------------------       |
+|   | This is div id="ev4"      |       |
+|   | --------              &lt;--------   |
+|   | | span |                  |       |
+|   | |      |                  |       |
+|   | --------                  |       |
+|   -----------------------------       |
+-----------------------------------------
+
+&lt;--------: mouse movement
+</pre>
+<p>If a mouseover event is added to <i>ev3</i>, then when mouse moves over <i>ev4</i>, it will also trigger the event 
+due to event bubbling/capturing. This is correct behaviour but does cause some problems:</p>
+
+<h4>Targeting</h4>
+<p>If the event enters <i>ev4</i> from <i>ev3</i> then <i>ev4</i> is the target because this is the element that the event 
+fired on.</p>
+<pre>
+-----------------------------------------
+| This is div id="ev3"                  |
+|   -----------------------------       |
+|   | This is div id="ev4"      |       |
+|   | --------              &lt;--------   |
+|   | | span |                  |       |
+|   | |      |                  |       |
+|   | --------                  |       |
+|   -----------------------------       |
+-----------------------------------------
+
+&lt;--------: mouse movement
+</pre>
+<p>The <code>target/srcElement</code> of this event references <i>ev4</i></p>
+<p>However, the same is true if the mouse moves from &lt;span&gt; to <i>ev4</i>.</p>
+<p>You may in fact wish something different to happen depending on where the mouse originated. The following properties can
+be used to achieve this:</p>
+<ul>
+	<li>relatedTarget</li>
+	<li>toElement</li>
+	<li>fromElement</li>
+</ul>
+<h3>relatedTarget</h3>
+<p>The <b>relatedTarget</b> property is a W3C defined attribute - it refers to the element that the mouse came from in
+ <code>mouseover</code> or the element it goes to in <code>mouseout</code>.</p>
+<h3>toElement</h3>
+<p>The <b>toElement</b> property is a Microsoft defined attribute - it refers to the element that the mouse goes to
+e.g. when using <code>mouseout</code></p>
+<h3>fromElement</h3>
+<p>The <b>fromElement</b> property is a Microsoft defined attribute - it refers to the element that the mouse came from 
+e.g. when using <code>mouseover</code>.</p>
+<h3>Cross Browser Compatibility</h3>
+
+<p>In order to cover all browser issues the following scripts can be used:</p>
+<h4>For <code>mouseover</code></h4>
+<pre>
+function doSomething(e) {
+	if (!e) var e = window.event;
+	var relTarg = e.relatedTarget || e.fromElement;
+}
+</pre>
+<h4>For <code>mouseout</code></h4>
+<pre>
+function doSomething(e) {
+	if (!e) var e = window.event;
+	var relTarg = e.relatedTarget || e.toElement;
+}
+</pre>
+<h2>Creating Dropdown boxes</h2>
+<p>When creating a dropdown/dropout layer of links, you will need to know when the mouse cursor
+leaves the dropdown &lt;div&gt; so that it can be closed. However, event bubbling will cause the 
+<code>onmouseout</code> event to fire when the mouse leaves one of the nested links. In addition,
+when the mouse moves from the dropdown &lt;div&gt; into a link, the mouseout event is again fired,
+even tough the mouse is still within the layer. This odd behaviour occurs across all browsers.</p>
+<p>What we want is:</p>
+<pre>
+--------------
+| dropDiv    | .onmouseout = hideDropDiv;
+| --------   |
+| | Link | ----&gt; We want to know about this mouseout
+| |      |   |
+| --------   |
+| --------   |
+| | Link |   |
+| |    ----&gt; | but not about this one
+| --------   |
+--------------
+----&gt;: mouse movement
+
+</pre>
+<p>The generic function to achieve this is:</p>
+<pre>
+function doSomething(e) {
+	if (!e) var e = window.event;
+	var tg = (window.event) ? e.srcElement : e.target;
+	if (tg.nodeName != 'DIV') return;
+	var reltg = (e.relatedTarget) ? e.relatedTarget : e.toElement;
+	while (reltg != tg && reltg.nodeName != 'BODY')
+		reltg= reltg.parentNode
+	if (reltg== tg) return;
+	// Mouseout took place when mouse actually left layer
+	// Handle event
+}
+</pre>
+<p>We first need to identify the element that was the target of the event i.e. the element that 
+the mouse moved out of. We use <code>if (!e) var e = window.event;</code> to assign the event
+(e) in both IE and Mozilla.</p>
+<p>We assign the element target to the variable <code>tg</code></p>
+
+<pre>
+	var tg = (window.event) ? e.srcElement : e.target;
+</pre>
+
+<p>In IE, the target of the event is accessed using <code>e.srcElement</code>, whereas in 
+Mozilla it is accessed via <code>e.target</code></p>
+
+<pre>
+	if (tg.nodeName != 'DIV') return;
+</pre>
+<p>If the target element is not the &lt;div&gt;, then mouse has clearly not left the dropDown &lt;div&gt;
+and so we just end the function</p>
+<pre>
+	var reltg = (e.relatedTarget) ? e.relatedTarget : e.toElement;
+</pre>
+<p>We assign the element that the mouse moved to to the variable <code>reltg</code>. However, we need
+to account for Browser incompatibilities</p>
+<ul>
+	<li>In Mozilla etc,<code>relatedTarget</code> is used, so if this is true assign 
+	<code>reltg</code> to <code>e.relatedTarget</code></li>
+	<li>If <code>relatedTarget</code>, it must be Microsoft which uses <code>toElement</code>
+	so we assign<code>reltg</code> to <code>e.toElement</code></li>
+</ul>
+<p>We now have the element that the cursor moved to held in <code>reltg</code>.</p>
+<pre>
+	while (reltg != tg && reltg.nodeName != 'BODY'){
+		reltg= reltg.parentNode
+		if (reltg== tg) return;
+		//otherwise mouse has left dropdown div so handle this event
+		//e.g. make dropdown div invisible
+	}
+</pre>
+<p>While the element that the mouse moved to is not the same as the element it moved from AND 
+it is not the &lt;body&gt; element, then set <code>reltg</code> to its parent i.e we
+are moving upward through the DOM tree until we encounter the <code>target</code> element 
+(that the mouse moved from) or the &lt;body&gt; element.</p>
+<pre>
+	if (reltg== tg) return;
+	//otherwise mouse has left dropdown div so handle this event
+	//e.g. make dropdown div invisible
+</pre>
+
+<p>If we encounter the target element on our way upwards, then the mouse can not have left the 
+dropdown &lt;div&gt; so we exit the function</p>
+<p>If not, the the mouse must have left the dropdown &lt;div&gt; so we handle this event e.g. we 
+could set the dropdown class to be invisible</p>
+</body>
+</html>
